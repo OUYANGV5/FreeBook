@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">阅天下</string>
+
+    <!--欢迎界面的文字-->
+    <string name="text_first">阅天下</string>
+    <string name="text_second">免费小说</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

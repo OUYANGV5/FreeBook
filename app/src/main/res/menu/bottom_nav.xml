@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/book" android:title="书架" android:icon="@drawable/ic_book"/>
+    <item android:id="@+id/store" android:title="书城" android:icon="@drawable/ic_store"/>
+    <item android:id="@+id/classify" android:title="分类" android:icon="@drawable/ic_classify"/>
+    <item android:id="@+id/rank" android:title="排行" android:icon="@drawable/ic_rank"/>
+</menu>
