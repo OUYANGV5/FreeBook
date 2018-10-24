@@ -16,11 +16,13 @@ import com.bumptech.glide.request.target.CustomViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.ouyang.freebook.R;
 import com.ouyang.freebook.modle.RequestConfig;
+import com.ouyang.freebook.modle.bean.Book;
 import com.ouyang.freebook.modle.bean.BookDetails;
 import com.ouyang.freebook.modle.bean.ResponseData;
 import com.ouyang.freebook.modle.request.BookRequest;
 import com.ouyang.freebook.util.ImmersionUtil;
 import com.ouyang.freebook.util.RequestUtil;
+import com.slideback.helper.SlideBackHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,29 +52,57 @@ public class BookDetailsActivity extends AppCompatActivity {
     LinearLayout top;
     @BindView(R.id.category)
     TextView category;
-    private long id;
-
+    @BindView(R.id.text)
+    TextView text;
+    //private long id;
+    private Book book;
     private BookRequest bookRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details);
+        SlideBackHelper.init(this);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
         ImmersionUtil.setImmersion(this);
         top.setPadding(top.getPaddingLeft(), top.getPaddingTop() + ImmersionUtil.getStateBar(this), top.getPaddingRight(), top.getPaddingBottom());
-        id = getIntent().getLongExtra("id", 0);
+        //id = getIntent().getLongExtra("id", 0);
+        book = getIntent().getParcelableExtra("book");
         init();
     }
 
     private void init() {
         bookRequest = RequestUtil.get(BookRequest.class);
+        Glide.with(top).load(RequestConfig.URL_IMG_BOOK_BASE + book.getImg())
+                .apply(new RequestOptions().optionalTransform(new BlurTransformation(360)))
+                .into(new CustomViewTarget<LinearLayout, Drawable>(top) {
+                    @Override
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        this.view.setBackgroundDrawable(resource);
+                    }
+
+                    @Override
+                    protected void onResourceCleared(@Nullable Drawable placeholder) {
+
+                    }
+                });
+        Glide.with(bookImg).load(RequestConfig.URL_IMG_BOOK_BASE + book.getImg()).into(bookImg);
+        name.setText(book.getName());
+        author.setText("作者:\t" + book.getAuthor());
+        category.setText("类别:\t" + book.getCName());
+        ratingBar.setRating((float) (book.getScore() / 2));
+        rating.setText("" + book.getScore());
         getData();
     }
 
     public void getData() {
-        bookRequest.getBookDetails(String.valueOf(id))
+        bookRequest.getBookDetails(String.valueOf(book.getId()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData<BookDetails>>() {
@@ -105,10 +135,11 @@ public class BookDetailsActivity extends AppCompatActivity {
                         Glide.with(bookImg).load(RequestConfig.URL_IMG_BOOK_BASE + bookDetails.getImg()).into(bookImg);
                         name.setText(bookDetails.getName());
                         author.setText("作者:\t" + bookDetails.getAuthor());
-                        category.setText("类别:\t"+bookDetails.getCName());
+                        category.setText("类别:\t" + bookDetails.getCName());
                         status.setText("状态:\t" + bookDetails.getBookStatus());
                         ratingBar.setRating((float) (bookDetails.getBookVote().getScore() / 2));
-                        rating.setText(""+bookDetails.getBookVote().getScore());
+                        rating.setText("" + bookDetails.getBookVote().getScore());
+                        text.setText(bookDetails.getDesc());
                     }
 
                     @Override

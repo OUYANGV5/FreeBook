@@ -11,11 +11,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.ViewUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.ouyang.freebook.R;
 import com.ouyang.freebook.modle.RequestConfig;
@@ -35,6 +37,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +64,7 @@ public class RankFragment extends BaseFragment {
     Unbinder unbinder;
 
     BookListAdapter bookListAdapter;
-
+    boolean hasNext;
     public RankFragment() {
 
         // Required empty public constructor
@@ -68,6 +72,7 @@ public class RankFragment extends BaseFragment {
 
     @Override
     public void init() {
+        hasNext=true;
         sexType = RequestConfig.SEX_TYPE_MAN;
         sortType = RequestConfig.SORT_TYPE_HOT;
         timeType = RequestConfig.TIME_TYPE_TOTAL;
@@ -85,8 +90,33 @@ public class RankFragment extends BaseFragment {
             public void onClick(View v, int position) {
                 Book book = bookListAdapter.getBookList().get(position);
                 Intent intent = new Intent(getActivity(), BookDetailsActivity.class);
-                intent.putExtra("id", book.getId());
+                //intent.putExtra("id", book.getId());
+                intent.putExtra("book",book);
                 startActivity(intent);
+            }
+        });
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager linearLayoutManager= (LinearLayoutManager) recyclerView.getLayoutManager();
+                if(recyclerView.computeVerticalScrollExtent()+recyclerView.computeVerticalScrollOffset()
+                        >=recyclerView.computeVerticalScrollRange()){
+                    bookListAdapter.setBottomStatus(1);
+                    bookListAdapter.notifyDataSetChanged();
+                    recyclerView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getData(false);
+                        }
+                    },500);
+
+                }
             }
         });
         refresh.setColorSchemeColors(Color.RED);
@@ -96,14 +126,22 @@ public class RankFragment extends BaseFragment {
                 getData(true);
             }
         });
-        getData(false);
+        getData(true);
     }
 
     public void getData(final boolean isUpdate) {
+
         int i;
         if(isUpdate){
+            bookListAdapter.setBottomStatus(0);
+            bookListAdapter.notifyDataSetChanged();
             i=1;
         }else {
+            if(!hasNext){
+                bookListAdapter.setBottomStatus(2);
+                bookListAdapter.notifyDataSetChanged();
+                return;
+            }
             i=index++;
         }
         rankRequest.getRankList(sexType, sortType, timeType, i)
@@ -112,11 +150,13 @@ public class RankFragment extends BaseFragment {
                 .subscribe(new Observer<ResponseData<BookList>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        if(isUpdate)
                             refresh.setRefreshing(true);
                     }
 
                     @Override
                     public void onNext(ResponseData<BookList> bookListResponseData) {
+                        hasNext=bookListResponseData.getData().isHasNext();
                         if(isUpdate){
                             bookListAdapter.getBookList().clear();
                             bookListAdapter.getBookList().addAll(bookListResponseData.getData().getBookList());
@@ -136,10 +176,12 @@ public class RankFragment extends BaseFragment {
                                 getData(isUpdate);
                             }
                         }).show();
+
                     }
 
                     @Override
                     public void onComplete() {
+                        if(isUpdate)
                             refresh.setRefreshing(false);
                     }
                 });
