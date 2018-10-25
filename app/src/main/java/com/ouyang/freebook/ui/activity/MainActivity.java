@@ -1,58 +1,35 @@
 package com.ouyang.freebook.ui.activity;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.ouyang.freebook.R;
+import com.ouyang.freebook.databinding.ActivityMainBinding;
 import com.ouyang.freebook.ui.fragment.BookrackFragment;
 import com.ouyang.freebook.ui.fragment.ClassifyFragment;
 import com.ouyang.freebook.ui.fragment.RankFragment;
 import com.ouyang.freebook.ui.fragment.StoreFragment;
-import com.ouyang.freebook.util.ImmersionUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-    @BindView(R.id.content)
-    ViewPager content;
 
     List<Fragment> fragmentList;
-
-    @BindView(R.id.bottomNav)
-    BottomNavigationViewEx bottomNav;
-
-    @BindView(R.id.contentRoot)
-    LinearLayout contentRoot;
-
-    @BindView(R.id.navigationView)
-    NavigationView navigationView;
-
-    @BindView(R.id.rootView)
-    DrawerLayout rootView;
-
+    ActivityMainBinding activityMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        activityMainBinding=DataBindingUtil.setContentView(this,R.layout.activity_main);
         //ImmersionUtil.setImmersion(this);
         init();
     }
@@ -63,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
         fragmentList.add(new StoreFragment());
         fragmentList.add(new ClassifyFragment());
         fragmentList.add(new RankFragment());
-        bottomNav.enableShiftingMode(false);
-        bottomNav.enableItemShiftingMode(false);
-        content.setOffscreenPageLimit(3);
-        content.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+        activityMainBinding.bottomNav.enableShiftingMode(false);
+        activityMainBinding.bottomNav.enableItemShiftingMode(false);
+        activityMainBinding.content.setOffscreenPageLimit(3);
+        activityMainBinding.content.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 return fragmentList.get(position);
@@ -77,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 return fragmentList.size();
             }
         });
-        bottomNav.setupWithViewPager(content);
+        activityMainBinding.bottomNav.setupWithViewPager(activityMainBinding.content);
     }
 
 
@@ -93,21 +70,21 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, rootView,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, activityMainBinding.rootView,
                 toolbar,
                 R.string.app_name, R.string.app_name) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 WindowManager windowManager = getWindowManager();
                 Display display = windowManager.getDefaultDisplay();
-                contentRoot.layout(navigationView.getRight(),
+                activityMainBinding.contentRoot.layout(activityMainBinding.navigationView.getRight(),
                         0,
-                        display.getWidth() + navigationView.getRight(),
+                        display.getWidth() + activityMainBinding.navigationView.getRight(),
                         display.getHeight());
                 super.onDrawerSlide(drawerView, slideOffset);
             }
         };
-        rootView.addDrawerListener(toggle);
+        activityMainBinding.rootView.addDrawerListener(toggle);
         toggle.syncState();
     }
 }

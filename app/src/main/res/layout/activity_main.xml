@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.activity.MainActivity">
-    <LinearLayout
-        android:id="@+id/contentRoot"
-        android:orientation="vertical"
+<layout>
+    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rootView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.ouyang.freebook.ui.view.NoScrollViewPager
-            android:id="@+id/content"
-            android:layout_weight="1"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.MainActivity">
+        <LinearLayout
+            android:id="@+id/contentRoot"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/line_color"/>
-        <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-            android:id="@+id/bottomNav"
+            android:layout_height="match_parent">
+            <com.ouyang.freebook.ui.view.NoScrollViewPager
+                android:id="@+id/content"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color"/>
+            <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+                android:id="@+id/bottomNav"
+                app:menu="@menu/bottom_nav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/navigationView"
+            android:layout_gravity="left"
             app:menu="@menu/bottom_nav"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_gravity="left"
-        app:menu="@menu/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</android.support.v4.widget.DrawerLayout>
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.DrawerLayout>
+</layout>

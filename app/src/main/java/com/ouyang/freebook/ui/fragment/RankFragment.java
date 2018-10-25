@@ -2,8 +2,12 @@ package com.ouyang.freebook.ui.fragment;
 
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -20,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.ouyang.freebook.R;
+import com.ouyang.freebook.databinding.FragmentRankBinding;
 import com.ouyang.freebook.modle.RequestConfig;
 import com.ouyang.freebook.modle.bean.Book;
 import com.ouyang.freebook.modle.bean.BookList;
@@ -30,9 +35,6 @@ import com.ouyang.freebook.ui.activity.MainActivity;
 import com.ouyang.freebook.ui.adapter.BookListAdapter;
 import com.ouyang.freebook.util.RequestUtil;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -44,24 +46,13 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
  * A simple {@link Fragment} subclass.
  */
 public class RankFragment extends BaseFragment {
-    @BindView(R.id.refresh)
-    SwipeRefreshLayout refresh;
+    FragmentRankBinding bind;
+
     private RankRequest rankRequest;
     private String sexType;
     private String sortType;
     private String timeType;
     private int index;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.sex)
-    TabLayout sex;
-    @BindView(R.id.sort)
-    TabLayout sort;
-    @BindView(R.id.time)
-    TabLayout time;
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-    Unbinder unbinder;
 
     BookListAdapter bookListAdapter;
     boolean hasNext;
@@ -79,12 +70,12 @@ public class RankFragment extends BaseFragment {
         index = 1;
         rankRequest = RequestUtil.get(RankRequest.class);
         MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.setToolbar(toolbar, true);
-        sex.addTab(sex.newTab().setText("男生"));
-        sex.addTab(sex.newTab().setText("女生"));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false));
+        mainActivity.setToolbar(bind.toolbar, true);
+        bind.sex.addTab(bind.sex.newTab().setText("男生"));
+        bind.sex.addTab(bind.sex.newTab().setText("女生"));
+        bind.recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false));
         bookListAdapter = new BookListAdapter();
-        recyclerView.setAdapter(bookListAdapter);
+        bind.recyclerView.setAdapter(bookListAdapter);
         bookListAdapter.setOnItemClickListener(new BookListAdapter.OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
@@ -95,7 +86,7 @@ public class RankFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        bind.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -119,8 +110,8 @@ public class RankFragment extends BaseFragment {
                 }
             }
         });
-        refresh.setColorSchemeColors(Color.RED);
-        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        bind.refresh.setColorSchemeColors(Color.RED);
+        bind.refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getData(true);
@@ -151,7 +142,7 @@ public class RankFragment extends BaseFragment {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if(isUpdate)
-                            refresh.setRefreshing(true);
+                            bind.refresh.setRefreshing(true);
                     }
 
                     @Override
@@ -182,7 +173,7 @@ public class RankFragment extends BaseFragment {
                     @Override
                     public void onComplete() {
                         if(isUpdate)
-                            refresh.setRefreshing(false);
+                            bind.refresh.setRefreshing(false);
                     }
                 });
     }
@@ -198,13 +189,17 @@ public class RankFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rank, container, false);
-        unbinder = ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        bind = DataBindingUtil.bind(view);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 }

@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/colorPrimary"
-    tools:context=".ui.activity.WelcomeActivity">
-    <me.wangyuwei.particleview.ParticleView
-        android:id="@+id/particleview"
+<layout>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:pv_background_color="?attr/colorPrimary"
-        app:pv_host_text="@string/text_first"
-        app:pv_particle_text="@string/text_second"
-        app:pv_particle_text_size="16sp"
-        app:pv_text_color="#FFF" />
-</FrameLayout>
+        android:background="?attr/colorPrimary"
+        tools:context=".ui.activity.WelcomeActivity">
+        <me.wangyuwei.particleview.ParticleView
+            android:id="@+id/particleview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:pv_background_color="?attr/colorPrimary"
+            app:pv_host_text="@string/text_first"
+            app:pv_particle_text="@string/text_second"
+            app:pv_particle_text_size="16sp"
+            app:pv_text_color="#FFF" />
+    </FrameLayout>
+</layout>

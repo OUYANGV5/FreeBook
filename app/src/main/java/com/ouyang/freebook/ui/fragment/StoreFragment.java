@@ -20,10 +20,6 @@ import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -36,10 +32,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class StoreFragment extends BaseFragment {
 
-
-    @BindView(R.id.banner)
-    com.youth.banner.Banner banner;
-    Unbinder unbinder;
 
     public StoreFragment() {
         // Required empty public constructor
@@ -64,7 +56,7 @@ public class StoreFragment extends BaseFragment {
                 .subscribe(new Consumer<List<String>>() {
                     @Override
                     public void accept(List<String> strings) throws Exception {
-                        banner.update(strings);
+                        //banner.update(strings);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -85,24 +77,23 @@ public class StoreFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_store, container, false);
-        unbinder = ButterKnife.bind(this, view);
         created();
         return view;
     }
     private void created(){
-        banner.setImageLoader(new GlideImageLoader())
+        /*banner.setImageLoader(new GlideImageLoader())
                 .setDelayTime(2000).setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
                 Toast.makeText(getContext(), ""+position, Toast.LENGTH_SHORT).show();
             }
         })
-                .start();
+                .start();*/
     }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        banner.stopAutoPlay();
-        unbinder.unbind();
+        /*banner.stopAutoPlay();
+        unbinder.unbind();*/
     }
 }

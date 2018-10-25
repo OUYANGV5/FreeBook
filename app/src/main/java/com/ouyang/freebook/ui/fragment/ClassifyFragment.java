@@ -27,9 +27,6 @@ import com.ouyang.freebook.modle.request.MainRequest;
 import com.ouyang.freebook.ui.activity.MainActivity;
 import com.ouyang.freebook.util.RequestUtil;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -39,26 +36,18 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class ClassifyFragment extends BaseFragment {
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.classify)
-    RecyclerView classify;
-    Unbinder unbinder;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_classify, container, false);
-        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void init() {
         MainActivity mainActivity= (MainActivity) getActivity();
-        mainActivity.setToolbar(toolbar,false);
-        classify.setLayoutManager(new GridLayoutManager(getContext(),2));
         Log.e("aaa","22222222222");
         RequestUtil.get(MainRequest.class).getBase(RequestConfig.SEX_TYPE_LADY)
                 .subscribeOn(Schedulers.io())
@@ -107,6 +96,5 @@ public class ClassifyFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 }

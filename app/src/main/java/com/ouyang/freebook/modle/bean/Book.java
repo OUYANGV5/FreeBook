@@ -16,8 +16,6 @@ public class Book implements Parcelable {
 
     }
 
-
-
     public long getId() {
         return Id;
     }
