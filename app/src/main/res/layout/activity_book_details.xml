@@ -1,128 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.activity.BookDetailsActivity">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:fitsSystemWindows="true"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="bookDetails"
+            type="com.ouyang.freebook.modle.bean.BookDetails"/>
+        <variable
+            name="book"
+            type="com.ouyang.freebook.modle.bean.Book"/>
+    </data>
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ScrollView
-            android:layout_weight="1"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.BookDetailsActivity">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:fitsSystemWindows="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:orientation="vertical"
+            <ScrollView
+                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
                 <LinearLayout
-                    android:id="@+id/top"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="20dp"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp">
-                    <ImageView
-                        android:id="@+id/bookImg"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/empty_book_img"
-                        android:layout_width="120dp"
-                        android:layout_height="180dp" />
+                    android:layout_height="wrap_content">
                     <LinearLayout
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="15dp"
-                        android:orientation="vertical"
+                        android:id="@+id/top"
+                        app:paddingTopToStateBar="@{true}"
+                        app:blurBackground="@{bookDetails.img??book.img}"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="20dp"
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="250dp">
+                        <ImageView
+                            app:imgName="@{bookDetails.img??book.img}"
+                            android:id="@+id/bookImg"
+                            android:scaleType="centerCrop"
+                            android:layout_width="120dp"
+                            android:layout_height="180dp" />
+                        <LinearLayout
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="15dp"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
                             <TextView
                                 android:id="@+id/name"
+                                android:text="@{bookDetails.name??book.name}"
                                 style="@style/titleTextStyle"
-                                android:text="标题"
                                 android:textSize="23sp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                             <TextView
                                 android:id="@+id/author"
-                                android:text="作者"
+                                android:text='@{@string/author+bookDetails.author??book.author}'
                                 android:layout_marginTop="10dp"
                                 android:textSize="16sp"
                                 style="@style/titleTextStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
-                        <TextView
-                            android:id="@+id/category"
-                            android:text="类型"
-                            android:layout_marginTop="3dp"
-                            android:textSize="16sp"
-                            style="@style/titleTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <TextView
-                            android:id="@+id/status"
-                            android:text="状态"
-                            android:layout_marginTop="3dp"
-                            android:textSize="16sp"
-                            style="@style/titleTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <LinearLayout
-                            android:layout_marginTop="3dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
                             <TextView
-                                android:text="评分:\t"
-                                android:textSize="16sp"
-                                android:gravity="center"
-                                android:layout_gravity="center_vertical"
-                                style="@style/titleTextStyle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
-                            <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                                android:layout_gravity="center_vertical"
-                                android:id="@+id/ratingBar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp" />
-                            <TextView
-                                android:id="@+id/rating"
-                                android:gravity="center"
-                                android:layout_gravity="center_vertical"
+                                android:id="@+id/category"
+                                android:text="@{@string/category+bookDetails.CName??book.CName}"
+                                android:layout_marginTop="3dp"
                                 android:textSize="16sp"
                                 style="@style/titleTextStyle"
-                                android:text=""
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/status"
+                                android:text="@{@string/status+bookDetails.bookStatus}"
+                                android:layout_marginTop="3dp"
+                                android:textSize="16sp"
+                                style="@style/titleTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <LinearLayout
+                                android:layout_marginTop="3dp"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:text='@{@string/score+String.valueOf(bookDetails!=null?bookDetails.bookVote.score:book.score)}'
+                                    android:textSize="16sp"
+                                    android:gravity="center"
+                                    android:layout_gravity="center_vertical"
+                                    style="@style/titleTextStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent" />
+                                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                                    android:layout_gravity="center_vertical"
+                                    android:id="@+id/ratingBar"
+                                    android:rating="@{(float)(bookDetails!=null?bookDetails.bookVote.score/2:book.score/2)}"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20dp" />
+                                <TextView
+                                    android:id="@+id/rating"
+                                    android:gravity="center"
+                                    android:layout_gravity="center_vertical"
+                                    android:textSize="16sp"
+                                    style="@style/titleTextStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-                <TextView
-                    android:text="简介"
-                    android:drawableLeft="@drawable/ic_left"
-                    android:drawablePadding="3dp"
-                    android:textSize="20sp"
-                    style="@style/contentTextStyle"
-                    android:textStyle="bold"
-                    android:padding="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/text"
-                    style="@style/contentTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </ScrollView>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+                    <TextView
+                        android:text="简介"
+                        android:drawableLeft="@drawable/ic_left"
+                        android:drawablePadding="3dp"
+                        android:textSize="20sp"
+                        style="@style/contentTextStyle"
+                        android:textStyle="bold"
+                        android:layout_margin="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/text"
+                        android:text="@{bookDetails.desc}"
+                        android:layout_marginHorizontal="18dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-</FrameLayout>
+                </LinearLayout>
+            </ScrollView>
+            <Button
+                android:text="立即阅读"
+                style="@style/titleTextStyle"
+                android:background="@drawable/drawable_button_read"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </FrameLayout>
+</layout>
