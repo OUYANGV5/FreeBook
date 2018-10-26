@@ -61,6 +61,7 @@ public class RankFragment extends BaseFragment {
         // Required empty public constructor
     }
 
+
     @Override
     public void init() {
         hasNext=true;

@@ -3,6 +3,7 @@ package com.ouyang.freebook.ui.adapter;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,8 +82,8 @@ public class BookListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (position < getItemCount() - 1) {
-            BookViewHolder bookViewHolder = (BookViewHolder) holder;
-            Book book = bookList.get(position);
+            final BookViewHolder bookViewHolder = (BookViewHolder) holder;
+            final Book book = bookList.get(position);
             bookViewHolder.itemBookBinding.setBook(book);
             bookViewHolder.itemBookBinding.executePendingBindings();
         } else {

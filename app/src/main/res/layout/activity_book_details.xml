@@ -35,6 +35,7 @@
                         android:id="@+id/top"
                         app:paddingTopToStateBar="@{true}"
                         app:blurBackground="@{bookDetails.img??book.img}"
+                        android:background="@drawable/gray_book_background"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="20dp"
                         android:orientation="horizontal"

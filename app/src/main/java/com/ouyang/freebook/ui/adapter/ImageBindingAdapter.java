@@ -23,7 +23,8 @@ public class ImageBindingAdapter {
     }
     @BindingAdapter("blurBackground")
     public static void bindImageToBackground(View v,String imgName){
-        Glide.with(v).load(RequestConfig.URL_IMG_BOOK_BASE+imgName)
+        Glide.with(v)
+                .load(RequestConfig.URL_IMG_BOOK_BASE+imgName)
                 .apply(new RequestOptions().optionalTransform(new BlurTransformation(360)))
                 .into(new CustomViewTarget<View ,Drawable>(v) {
                     @Override
