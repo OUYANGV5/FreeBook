@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#4CAF50</color>
-    <color name="colorPrimaryPress">#429745</color>
+    <color name="colorPrimaryPress">#3a863d</color>
     <color name="colorPrimaryDark">#388E3C</color>
     <color name="colorAccent">#D81B60</color>
 
+    <!--下划线颜色-->
     <color name="line_color">#cfcfcf</color>
+
 
     <color name="not_select">#8C8C8C</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
 
+
     <color name="press">#bcbcbc</color>
+
+    <color name="bookColorPrimary">#8e000000</color>
+
+    <color name="bookContent">#e8d8b7</color>
+    <color name="contentTextColor">#424242</color>
+
+    <color name="bookContentMenuColor">#fff</color>
+    <color name="bookContentMenuViewColor">#767676</color>
+
+    <color name="chapterItemSelectColor">#bebebe</color>
+
+    <color name="emptyBackgroundColor">#f1f1f1</color>
+    <color name="bookListBackgroundColor">#71ffffff</color>
 </resources>

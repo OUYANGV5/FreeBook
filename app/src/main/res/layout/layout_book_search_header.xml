@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:elevation="1dp"
+    android:background="@drawable/main_edtext_background"
+    android:layout_width="match_parent"
+    android:layout_height="40dp">
+        <com.ouyang.freebook.ui.view.ImageTextView
+            android:drawableLeft="@drawable/ic_search_black"
+            android:layout_gravity="center"
+            app:image_width="20dp"
+            app:image_height="20dp"
+            android:drawablePadding="5dp"
+            android:hint="搜索"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+</FrameLayout>

@@ -1,18 +1,22 @@
 package com.ouyang.freebook.modle.bean;
 
 
+import org.litepal.annotation.Column;
+import org.litepal.crud.LitePalSupport;
+
 import java.util.List;
 
-public class BookChapterData {
-    private String id;
-    private String name;
+public class BookChapterData extends LitePalSupport {
+    @Column(unique = true)
+    private int id;//小说id
+    private String name;//小说名
     private List<BookChapterList> list;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

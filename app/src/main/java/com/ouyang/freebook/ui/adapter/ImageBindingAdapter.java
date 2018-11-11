@@ -15,7 +15,9 @@ import com.bumptech.glide.request.transition.Transition;
 import com.ouyang.freebook.modle.RequestConfig;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
-
+/*
+    根据图片名字获取图片和高斯模糊背景
+ */
 public class ImageBindingAdapter {
     @BindingAdapter(value = "imgName")
     public static void bindImageUrl(ImageView imageView,String imgName){

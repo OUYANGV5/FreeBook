@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="categoryBooks"
+            type="com.ouyang.freebook.modle.bean.CategoryBooks"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:visibility="@{categoryBooks!=null?View.VISIBLE:View.GONE}"
+        android:background="@color/bookListBackgroundColor"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:paddingTop="7dp"
+            android:paddingBottom="10dp"
+            android:paddingHorizontal="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.ouyang.freebook.ui.view.ImageTextView
+                android:drawableLeft="@drawable/ic_bookmark"
+                app:image_width="15dp"
+                app:image_height="15dp"
+                android:drawablePadding="5dp"
+                android:text="@{categoryBooks.category}"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/more"
+                android:text="更多>"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:descendantFocusability="blocksDescendants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                app:gridBookAdapter="@{categoryBooks.books}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

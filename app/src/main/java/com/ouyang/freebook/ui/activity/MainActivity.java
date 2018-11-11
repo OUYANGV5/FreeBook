@@ -13,9 +13,11 @@ import android.view.WindowManager;
 import com.ouyang.freebook.R;
 import com.ouyang.freebook.databinding.ActivityMainBinding;
 import com.ouyang.freebook.ui.fragment.BookrackFragment;
-import com.ouyang.freebook.ui.fragment.ClassifyFragment;
+import com.ouyang.freebook.ui.fragment.CategoryFragment;
 import com.ouyang.freebook.ui.fragment.RankFragment;
 import com.ouyang.freebook.ui.fragment.StoreFragment;
+import com.ouyang.freebook.util.ImmersionUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +30,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        ImmersionUtil.setImmersion(this);
         activityMainBinding=DataBindingUtil.setContentView(this,R.layout.activity_main);
-        //ImmersionUtil.setImmersion(this);
         init();
     }
 
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentList = new ArrayList<>();
         fragmentList.add(new BookrackFragment());
         fragmentList.add(new StoreFragment());
-        fragmentList.add(new ClassifyFragment());
+        fragmentList.add(new CategoryFragment());
         fragmentList.add(new RankFragment());
         activityMainBinding.bottomNav.enableShiftingMode(false);
         activityMainBinding.bottomNav.enableItemShiftingMode(false);

@@ -1,5 +1,8 @@
 package com.ouyang.freebook.modle.bean;
 
+import org.litepal.annotation.Column;
+import org.litepal.crud.LitePalSupport;
+
 public class BookChapter {
     private String id;
     private String name;

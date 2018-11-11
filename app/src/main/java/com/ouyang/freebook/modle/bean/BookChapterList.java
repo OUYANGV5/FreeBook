@@ -1,11 +1,13 @@
 package com.ouyang.freebook.modle.bean;
 
+import org.litepal.crud.LitePalSupport;
+
 import java.util.List;
 
 /*
     BookChapter的上一层包装,普通卷或vip卷
  */
-public class BookChapterList {
+public class BookChapterList extends LitePalSupport {
     private String name;
     private List<BookChapter> list;
 

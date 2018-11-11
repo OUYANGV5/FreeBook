@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="chapter"
+            type="com.ouyang.freebook.modle.bean.BookChapter"/>
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/item_chapter_background"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="@{chapter.name}"
+            android:layout_marginLeft="5dp"
+            android:layout_marginVertical="10dp"
+            android:textSize="17sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</layout>

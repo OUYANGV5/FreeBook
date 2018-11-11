@@ -19,16 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookListAdapter extends RecyclerView.Adapter {
-    public static final int TYPE_ITEM = 0;//底部控件
-    public static final int TYPE_BOTTOM = 1;
+    public static final int TYPE_ITEM = 0;//普通项
+    public static final int TYPE_BOTTOM = 1;//底部控件
 
-    public static final int STATUS_NOTHING=0;
-    public static final int STATUS_LOADING=1;
-    public static final int STATUS_NOTHING_LOAD=2;
+    public static final int STATUS_NOTHING=0;//无
+    public static final int STATUS_LOADING=1;//加载中
+    public static final int STATUS_NOTHING_LOAD=2;//加载完
 
     private List<Book> bookList ;
     private OnItemClickListener onItemClickListener;
-    private int bottomStatus;//0,1,2  无,加载中,加载完
+    private int bottomStatus;// STATUS__*
     public BookListAdapter() {
         bookList = new ArrayList<>();
     }

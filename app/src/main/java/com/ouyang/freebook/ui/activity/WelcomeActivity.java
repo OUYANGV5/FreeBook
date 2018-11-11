@@ -32,13 +32,8 @@ public class WelcomeActivity extends AppCompatActivity {
         activityWelcomeBinding.particleview.setOnParticleAnimListener(new ParticleView.ParticleAnimListener() {
             @Override
             public void onAnimationEnd() {
-                activityWelcomeBinding.particleview.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
-                        finish();
-                    }
-                },500);
+                startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
+                finish();
 
             }
         });

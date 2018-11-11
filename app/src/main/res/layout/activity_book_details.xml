@@ -9,21 +9,21 @@
         <variable
             name="book"
             type="com.ouyang.freebook.modle.bean.Book"/>
+        <variable
+            name="commentData"
+            type="com.ouyang.freebook.modle.bean.comment.CommentResponseData"/>
     </data>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.activity.BookDetailsActivity">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:fitsSystemWindows="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
         <LinearLayout
             android:orientation="vertical"
+            android:background="@color/emptyBackgroundColor"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ScrollView
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/scrollRoot"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -36,19 +36,22 @@
                         app:paddingTopToStateBar="@{true}"
                         app:blurBackground="@{bookDetails.img??book.img}"
                         android:background="@drawable/gray_book_background"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="20dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="250dp">
                         <ImageView
                             app:imgName="@{bookDetails.img??book.img}"
                             android:id="@+id/bookImg"
+                            android:layout_marginTop="30dp"
                             android:scaleType="centerCrop"
                             android:layout_width="120dp"
                             android:layout_height="180dp" />
                         <LinearLayout
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="35dp"
                             android:layout_marginLeft="15dp"
                             android:orientation="vertical"
                             android:layout_width="match_parent"
@@ -115,32 +118,159 @@
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                    <TextView
-                        android:text="简介"
-                        android:drawableLeft="@drawable/ic_left"
-                        android:drawablePadding="3dp"
-                        android:textSize="20sp"
-                        style="@style/contentTextStyle"
-                        android:textStyle="bold"
-                        android:layout_margin="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:id="@+id/text"
-                        android:text="@{bookDetails.desc}"
-                        android:layout_marginHorizontal="18dp"
+                    <LinearLayout
+                        android:background="@color/bookListBackgroundColor"
+                        android:orientation="vertical"
+                        android:paddingBottom="40dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content">
+                        <com.ouyang.freebook.ui.view.ImageTextView
+                            android:text="简介"
+                            android:drawableLeft="@drawable/ic_left"
+                            app:image_width="3dp"
+                            app:image_height="20dp"
+                            android:drawablePadding="3dp"
+                            android:textSize="18sp"
+                            style="@style/contentTextStyle"
+                            android:textStyle="bold"
+                            android:layout_margin="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/text"
+                            android:text="@{bookDetails.desc}"
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginRight="18dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_marginTop="5dp"
+                        android:clickable="true"
+                        android:background="@drawable/drawable_button_press"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:text="目录"
+                            android:textSize="15sp"
+                            style="@style/contentTextStyle"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <LinearLayout
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@drawable/ic_menu_black_24dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp" />
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:paddingLeft="15dp"
+                                android:paddingBottom="3dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:text='@{@string/lastUpdate+bookDetails.lastTime}'
+                                    android:textColor="#60000000"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                                <TextView
+                                    android:text="@{bookDetails.lastChapter}"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+                            <TextView
+                                android:text=">"
+                                android:textSize="20sp"
+                                android:layout_margin="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/bookListBackgroundColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="书友评论"
+                                android:textSize="15sp"
+                                android:layout_weight="1"
+                                style="@style/contentTextStyle"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <com.ouyang.freebook.ui.view.ImageTextView
+                                app:image_width="15dp"
+                                app:image_height="15dp"
+                                android:text="写评论"
+                                android:paddingTop="3dp"
+                                android:paddingBottom="3dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/drawable_border_background_green"
+                                android:drawablePadding="5dp"
+                                android:textColor="@color/colorPrimary"
+                                android:drawableLeft="@drawable/ic_write"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:descendantFocusability="blocksDescendants"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <android.support.v7.widget.RecyclerView
+                                commentAdapter="@{commentData.comments}"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </RelativeLayout>
+                    </LinearLayout>
                 </LinearLayout>
-            </ScrollView>
+            </android.support.v4.widget.NestedScrollView>
             <Button
+                android:id="@+id/read"
                 android:text="立即阅读"
+                android:enabled="@{bookDetails!=null}"
                 style="@style/titleTextStyle"
                 android:background="@drawable/drawable_button_read"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="@color/bookContentMenuViewColor"
+            android:fitsSystemWindows="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/title"
+                android:text="@{bookDetails.name}"
+                android:textColor="@color/bookContentMenuColor"
+                android:textSize="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.Toolbar>
     </FrameLayout>
 </layout>

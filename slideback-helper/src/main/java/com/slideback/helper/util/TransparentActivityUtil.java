@@ -8,8 +8,7 @@ import java.lang.reflect.Method;
 public class TransparentActivityUtil {
 
     /*
-        Make an activity transparent
-        When the method ends, it returns whether or not the transformation was successful
+        使一个activity变的可透明的，此外它底下的activity将不会再执行onStop方法
      */
     public static void makeTransparent(Activity activity) {
 
@@ -67,6 +66,9 @@ public class TransparentActivityUtil {
         }
     }
 
+    /*
+        使一个activity从透明变成不透明，恢复原来的状态
+     */
     public static void makeOpacity(Activity activity) {
         try {
             Method method = Activity.class.getDeclaredMethod("convertFromTranslucent");

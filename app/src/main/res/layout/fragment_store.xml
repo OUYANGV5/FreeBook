@@ -1,31 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragment.StoreFragment">
-        <android.support.design.widget.AppBarLayout
+<layout>
+        <data>
+            <import type="com.ouyang.freebook.modle.bean.Banner" alias="Banner"/>
+            <import type="java.util.List"/>
+            <import type="com.ouyang.freebook.util.ImmersionUtil"/>
+            <variable
+                name="bannerList"
+                type="List&lt;Banner>"/>
+        </data>
+        <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    app:layout_scrollFlags="scroll|enterAlways"
+            android:layout_height="match_parent"
+            android:background="@color/emptyBackgroundColor"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            tools:context=".ui.fragment.StoreFragment">
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/scrollViewRoot"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                </android.support.v7.widget.Toolbar>
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tabLayout"
-                    app:tabMode="fixed"
+                    <RelativeLayout
+                        android:id="@+id/header"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <com.youth.banner.Banner
+                            android:id="@+id/banner"
+                            app:indicator_margin="10dp"
+                            bannerList="@{bannerList}"
+                            app:banner_default_image="@drawable/empty_book_img"
+                            app:indicator_width="0dp"
+                            app:indicator_height="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"/>
+                        <include android:layout_marginHorizontal="25dp"
+                            android:layout_below="@id/banner"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-20dp"
+                            layout="@layout/layout_book_search_header"/>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:background="@color/bookListBackgroundColor"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <com.ouyang.freebook.ui.view.ImageTextView
+                            android:id="@+id/commend"
+                            android:text="推荐"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:drawableTop="@drawable/ic_commend"
+                            android:drawablePadding="5dp"
+                            app:image_width="23dp"
+                            app:image_height="23dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content" />
+                        <com.ouyang.freebook.ui.view.ImageTextView
+                            android:id="@+id/collect"
+                            android:text="收藏"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:drawablePadding="5dp"
+                            android:drawableTop="@drawable/ic_collect"
+                            app:image_width="25dp"
+                            app:image_height="25dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content" />
+                        <com.ouyang.freebook.ui.view.ImageTextView
+                            android:id="@+id/vote"
+                            android:text="评分"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:drawableTop="@drawable/ic_vote"
+                            android:drawablePadding="4dp"
+                            app:image_width="25dp"
+                            app:image_height="25dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content" />
+                        <com.ouyang.freebook.ui.view.ImageTextView
+                            android:id="@+id/over"
+                            android:text="完结"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:drawableTop="@drawable/ic_over"
+                            android:drawablePadding="4dp"
+                            app:image_width="26dp"
+                            app:image_height="26dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content" />
+                        <com.ouyang.freebook.ui.view.ImageTextView
+                            android:id="@+id/hot"
+                            android:text="热门"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:drawableTop="@drawable/ic_hot"
+                            android:drawablePadding="5dp"
+                            app:image_width="25dp"
+                            app:image_height="25dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <include
+                        android:id="@+id/scrollView"
+                        android:layout_marginTop="3dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_bookshow_scroll"/>
+                    <include
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/gridNewView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_book_show_list"/>
+                    <include
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/gridHotView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_book_show_grid"/>
+                    <include
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/gridOverView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/layout_book_show_grid"/>
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+            <LinearLayout
+                android:id="@+id/visibleHeader"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-        </android.support.design.widget.AppBarLayout>
+                    android:background="@color/colorPrimary"
+                    heightWithStateBar="@{true}"
+                    android:layout_height="0dp"/>
+                <FrameLayout
+                    android:clickable="true"
+                    android:elevation="2dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:background="@drawable/main_edtext_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    <com.ouyang.freebook.ui.view.ImageTextView
+                        android:drawableLeft="@drawable/ic_search_black"
+                        android:layout_gravity="center"
+                        app:image_width="20dp"
+                        app:image_height="20dp"
+                        android:drawablePadding="5dp"
+                        android:hint="搜索"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+            </LinearLayout>
 
-        <com.youth.banner.Banner
-            android:id="@+id/banner"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"/>
-
-
-</android.support.design.widget.CoordinatorLayout>
+        </android.support.design.widget.CoordinatorLayout>
+</layout>

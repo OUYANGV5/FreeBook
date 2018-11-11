@@ -13,4 +13,6 @@
     <string name="score">评分:\t</string>
     <string name="category">类型:\t</string>
     <string name="status">状态:\t</string>
+
+    <string name="lastUpdate">最近更新</string>
 </resources>

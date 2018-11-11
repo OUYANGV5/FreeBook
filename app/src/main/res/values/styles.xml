@@ -32,4 +32,9 @@
     <style name="contentTextStyle">
         <item name="android:textColor">@android:color/black</item>
     </style>
+
+    <style name="seekbarStyle">
+        <item name="android:thumb">@drawable/circle_gray</item>
+        <item name="android:progressDrawable">@drawable/seekbar_progess</item>
+    </style>
 </resources>

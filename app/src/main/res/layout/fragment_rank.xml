@@ -14,10 +14,14 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".ui.fragment.RankFragment">
         <android.support.design.widget.AppBarLayout
+            android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
+                app:paddingTopToStateBar="@{true}"
+                app:layout_scrollFlags="scroll|enterAlways"
+                android:background="?attr/colorPrimary"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -28,30 +32,72 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </android.support.v7.widget.Toolbar>
+
             <LinearLayout
-                android:visibility="gone"
+                android:background="@android:color/white"
+                app:layout_scrollFlags="scroll|enterAlways"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/sex"
-                    app:tabMode="fixed"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/sex"
+                        app:tabMode="fixed"
+                        android:elevation="0dp"
+                        android:layout_weight="2"
+                        app:tabTextColor="@android:color/black"
+                        app:tabSelectedTextColor="@android:color/white"
+                        android:background="@android:color/transparent"
+                        app:tabBackground="@null"
+                        app:tabIndicatorColor="@null"
+                        android:layout_width="0dp"
+                        android:clipToPadding="false"
+                        android:layout_height="40dp"/>
+                    <View
+                        android:layout_weight="4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+
                 <android.support.design.widget.TabLayout
                     android:id="@+id/sort"
                     app:tabMode="fixed"
+                    app:tabTextColor="@android:color/black"
+                    app:tabSelectedTextColor="@android:color/white"
+                    android:background="@android:color/transparent"
+                    app:tabBackground="@null"
+                    app:tabIndicatorColor="@null"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/time"
-                    app:tabMode="fixed"
+                    android:layout_height="40dp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/time"
+                        app:tabMode="fixed"
+                        app:tabTextColor="@android:color/black"
+                        app:tabSelectedTextColor="@android:color/white"
+                        android:background="@android:color/transparent"
+                        app:tabBackground="@null"
+                        android:layout_weight="1"
+                        app:tabIndicatorColor="@null"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
             </LinearLayout>
         </android.support.design.widget.AppBarLayout>
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/refresh"
+            android:layout_marginTop="0dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

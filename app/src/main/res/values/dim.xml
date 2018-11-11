@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sectionTitleHeight">50dp</dimen>
+    <dimen name="contentPadding">15dp</dimen>
+    <dimen name="readBottomHeight">30dp</dimen>
+    <dimen name="contentTextSize">17sp</dimen>
+</resources>

@@ -33,11 +33,16 @@ import com.ouyang.freebook.modle.request.RankRequest;
 import com.ouyang.freebook.ui.activity.BookDetailsActivity;
 import com.ouyang.freebook.ui.activity.MainActivity;
 import com.ouyang.freebook.ui.adapter.BookListAdapter;
+import com.ouyang.freebook.ui.view.ProxyDrawable;
 import com.ouyang.freebook.util.RequestUtil;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
@@ -60,20 +65,123 @@ public class RankFragment extends BaseFragment {
 
         // Required empty public constructor
     }
-
+    public void initTabLayout(TabLayout tabLayout){
+        View v=tabLayout.getChildAt(0);
+        v.setBackgroundDrawable(new ProxyDrawable(v,getResources().getColor(R.color.colorPrimary)));
+    }
 
     @Override
     public void init() {
         hasNext=true;
         sexType = RequestConfig.SEX_TYPE_MAN;
-        sortType = RequestConfig.SORT_TYPE_HOT;
+        sortType = RequestConfig.SORT_TYPE_COMMEND;
         timeType = RequestConfig.TIME_TYPE_TOTAL;
         index = 1;
         rankRequest = RequestUtil.get(RankRequest.class);
-        MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.setToolbar(bind.toolbar, true);
+
+        initTabLayout(bind.sex);
+        initTabLayout(bind.sort);
+        initTabLayout(bind.time);
         bind.sex.addTab(bind.sex.newTab().setText("男生"));
         bind.sex.addTab(bind.sex.newTab().setText("女生"));
+        bind.sort.addTab(bind.sort.newTab().setText("最热"));
+        bind.sort.addTab(bind.sort.newTab().setText("推荐"));
+        bind.sort.addTab(bind.sort.newTab().setText("完结"));
+        bind.sort.addTab(bind.sort.newTab().setText("收藏"));
+        bind.sort.addTab(bind.sort.newTab().setText("新书"));
+        bind.sort.addTab(bind.sort.newTab().setText("评分"));
+        bind.time.addTab(bind.time.newTab().setText("周榜"));
+        bind.time.addTab(bind.time.newTab().setText("月榜"));
+        bind.time.addTab(bind.time.newTab().setText("总榜"));
+        bind.sort.getTabAt(1).select();
+        bind.time.getTabAt(2).select();
+        bind.sex.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0:
+                        sexType=RequestConfig.SEX_TYPE_MAN;
+                        break;
+                    case 1:
+                        sexType=RequestConfig.SEX_TYPE_LADY;
+                        break;
+                }
+                getData(true);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        bind.sort.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0:
+                        sortType=RequestConfig.SORT_TYPE_HOT;
+                        break;
+                    case 1:
+                        sortType=RequestConfig.SORT_TYPE_COMMEND;
+                        break;
+                    case 2:
+                        sortType=RequestConfig.SORT_TYPE_OVER;
+                        break;
+                    case 3:
+                        sortType=RequestConfig.SORT_TYPE_COLLECT;
+                        break;
+                    case 4:
+                        sortType=RequestConfig.SORT_TYPE_NEW;
+                        break;
+                    case 5:
+                        sortType=RequestConfig.SORT_TYPE_VOTE;
+                        break;
+                }
+                getData(true);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        bind.time.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0:
+                        timeType=RequestConfig.TIME_TYPE_WEEK;
+                        break;
+                    case 1:
+                        timeType=RequestConfig.TIME_TYPE_MONTH;
+                        break;
+                    case 2:
+                        timeType=RequestConfig.TIME_TYPE_TOTAL;
+                        break;
+                }
+                getData(true);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         bind.recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false));
         bookListAdapter = new BookListAdapter();
         bind.recyclerView.setAdapter(bookListAdapter);
@@ -98,7 +206,7 @@ public class RankFragment extends BaseFragment {
                 super.onScrolled(recyclerView, dx, dy);
                 LinearLayoutManager linearLayoutManager= (LinearLayoutManager) recyclerView.getLayoutManager();
                 if(recyclerView.computeVerticalScrollExtent()+recyclerView.computeVerticalScrollOffset()
-                        >=recyclerView.computeVerticalScrollRange()){
+                        >=recyclerView.computeVerticalScrollRange()&&bookListAdapter.getBookList().size()>0){
                     bookListAdapter.setBottomStatus(1);
                     bookListAdapter.notifyDataSetChanged();
                     recyclerView.postDelayed(new Runnable() {
@@ -106,7 +214,7 @@ public class RankFragment extends BaseFragment {
                         public void run() {
                             getData(false);
                         }
-                    },500);
+                    },200);
 
                 }
             }
@@ -125,12 +233,12 @@ public class RankFragment extends BaseFragment {
 
         int i;
         if(isUpdate){
-            bookListAdapter.setBottomStatus(0);
+            bookListAdapter.setBottomStatus(BookListAdapter.STATUS_NOTHING);
             bookListAdapter.notifyDataSetChanged();
             i=1;
         }else {
             if(!hasNext){
-                bookListAdapter.setBottomStatus(2);
+                bookListAdapter.setBottomStatus(BookListAdapter.STATUS_NOTHING_LOAD);
                 bookListAdapter.notifyDataSetChanged();
                 return;
             }
@@ -151,7 +259,9 @@ public class RankFragment extends BaseFragment {
                         hasNext=bookListResponseData.getData().isHasNext();
                         if(isUpdate){
                             bookListAdapter.getBookList().clear();
-                            bookListAdapter.getBookList().addAll(bookListResponseData.getData().getBookList());
+                            bookListAdapter.addBookList(bookListResponseData.getData().getBookList());
+                            if(bind.recyclerView.getChildCount()>0)
+                                bind.recyclerView.scrollToPosition(0);
                             index=1;
                         }else {
                             bookListAdapter.addBookList(bookListResponseData.getData().getBookList());
@@ -161,6 +271,7 @@ public class RankFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        bind.refresh.setRefreshing(false);
                         Log.e("请求网络失败", e.getMessage());
                         Snackbar.make(getView(), "请求失败了", 3000).setAction("重试", new View.OnClickListener() {
                             @Override
@@ -181,7 +292,8 @@ public class RankFragment extends BaseFragment {
 
     @Override
     public void onVisibleAgain() {
-
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.setToolbar(bind.toolbar, true);
     }
 
 

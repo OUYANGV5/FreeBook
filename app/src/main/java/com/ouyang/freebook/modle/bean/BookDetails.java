@@ -2,33 +2,67 @@
  * Copyright 2018 bejson.com
  */
 package com.ouyang.freebook.modle.bean;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 import java.util.List;
 
 /*
  *   书本详情
  */
-public class BookDetails {
+public class BookDetails implements Parcelable {
 
-    private long Id;
+    private String Id;
     private String Name;
     private String Img;
     private String Author;
     private String Desc;
-    private int CId;
+    private String CId;
     private String CName;//类别
     private String LastTime;
-    private long FirstChapterId;
+    private String FirstChapterId;
     private String LastChapter;
-    private long LastChapterId;
+    private String LastChapterId;
     private String BookStatus;
     private List<SameUserBooks> SameUserBooks;
     private List<SameCategoryBooks> SameCategoryBooks;
     private BookVote BookVote;
-    public void setId(long Id) {
+
+    public BookDetails() {
+    }
+
+    protected BookDetails(Parcel in) {
+        Id = in.readString();
+        Name = in.readString();
+        Img = in.readString();
+        Author = in.readString();
+        Desc = in.readString();
+        CId = in.readString();
+        CName = in.readString();
+        LastTime = in.readString();
+        FirstChapterId = in.readString();
+        LastChapter = in.readString();
+        LastChapterId = in.readString();
+        BookStatus = in.readString();
+    }
+
+    public static final Creator<BookDetails> CREATOR = new Creator<BookDetails>() {
+        @Override
+        public BookDetails createFromParcel(Parcel in) {
+            return new BookDetails(in);
+        }
+
+        @Override
+        public BookDetails[] newArray(int size) {
+            return new BookDetails[size];
+        }
+    };
+
+    public void setId(String Id) {
         this.Id = Id;
     }
-    public long getId() {
+    public String getId() {
         return Id;
     }
 
@@ -60,10 +94,10 @@ public class BookDetails {
         return Desc;
     }
 
-    public void setCId(int CId) {
+    public void setCId(String CId) {
         this.CId = CId;
     }
-    public int getCId() {
+    public String getCId() {
         return CId;
     }
 
@@ -81,10 +115,10 @@ public class BookDetails {
         return LastTime;
     }
 
-    public void setFirstChapterId(long FirstChapterId) {
+    public void setFirstChapterId(String FirstChapterId) {
         this.FirstChapterId = FirstChapterId;
     }
-    public long getFirstChapterId() {
+    public String getFirstChapterId() {
         return FirstChapterId;
     }
 
@@ -95,10 +129,10 @@ public class BookDetails {
         return LastChapter;
     }
 
-    public void setLastChapterId(long LastChapterId) {
+    public void setLastChapterId(String LastChapterId) {
         this.LastChapterId = LastChapterId;
     }
-    public long getLastChapterId() {
+    public String getLastChapterId() {
         return LastChapterId;
     }
 
@@ -130,4 +164,25 @@ public class BookDetails {
         return BookVote;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(Id);
+        dest.writeString(Name);
+        dest.writeString(Img);
+        dest.writeString(Author);
+        dest.writeString(Desc);
+        dest.writeString(CId);
+        dest.writeString(CName);
+        dest.writeString(LastTime);
+        dest.writeString(FirstChapterId);
+        dest.writeString(LastChapter);
+        dest.writeString(LastChapterId);
+        dest.writeString(BookStatus);
+
+    }
 }

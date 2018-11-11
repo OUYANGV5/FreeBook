@@ -1,13 +1,14 @@
 package com.ouyang.freebook.ui.view;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
+@Deprecated
 public class CollapsibleLayout extends ViewGroup {
     private View bottomView;
 
@@ -26,7 +27,6 @@ public class CollapsibleLayout extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
         int widthMode=MeasureSpec.getMode(widthMeasureSpec);
         int heightMode=MeasureSpec.getMode(heightMeasureSpec);
         int width=MeasureSpec.getSize(widthMeasureSpec);
@@ -52,4 +52,5 @@ public class CollapsibleLayout extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
 
     }
+
 }

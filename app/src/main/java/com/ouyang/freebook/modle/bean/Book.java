@@ -10,7 +10,7 @@ public class Book implements Parcelable {
     private String Img;//图片
     private String Desc;//简介
     private String CName;
-    private double Score;
+    private double Score;//评分
 
     public Book(){
 

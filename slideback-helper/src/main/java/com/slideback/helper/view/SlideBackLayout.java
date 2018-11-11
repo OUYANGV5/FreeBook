@@ -123,11 +123,11 @@ public class SlideBackLayout extends FrameLayout {
             isScrollToOrigin=true;
             if(event.getRawX()<getWidth()/3){
                 isBack=false;
-                scroller.startScroll(getScrollX(),getScrollY(),-getScrollX(),-getScrollY(),600);
+                scroller.startScroll(getScrollX(),getScrollY(),-getScrollX(),-getScrollY());
                 invalidate();
             }else {
                 isBack=true;
-                scroller.startScroll(getScrollX(),getScrollY(),-getWidth()-getScrollX(),-getScrollY(),600);
+                scroller.startScroll(getScrollX(),getScrollY(),-getWidth()-getScrollX(),-getScrollY());
                 invalidate();
             }
             scrollListener.onScrollRelease(isBack);
