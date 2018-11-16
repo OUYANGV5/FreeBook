@@ -12,6 +12,9 @@
         <variable
             name="commentData"
             type="com.ouyang.freebook.modle.bean.comment.CommentResponseData"/>
+        <variable
+            name="bookBean"
+            type="com.ouyang.freebook.modle.litepal.BookBean"/>
     </data>
     <FrameLayout
         android:layout_width="match_parent"
@@ -34,7 +37,7 @@
                     <LinearLayout
                         android:id="@+id/top"
                         app:paddingTopToStateBar="@{true}"
-                        app:blurBackground="@{bookDetails.img??book.img}"
+                        blurBackground="@{bookDetails.img??book.img}"
                         android:background="@drawable/gray_book_background"
                         android:paddingLeft="15dp"
                         android:paddingRight="10dp"
@@ -42,7 +45,7 @@
                         android:paddingBottom="20dp"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp">
+                        android:layout_height="270dp">
                         <ImageView
                             app:imgName="@{bookDetails.img??book.img}"
                             android:id="@+id/bookImg"
@@ -55,7 +58,7 @@
                             android:layout_marginLeft="15dp"
                             android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="wrap_content">
                             <TextView
                                 android:id="@+id/name"
                                 android:text="@{bookDetails.name??book.name}"
@@ -219,9 +222,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                             <com.ouyang.freebook.ui.view.ImageTextView
+                                android:foreground="?attr/selectableItemBackground"
                                 app:image_width="15dp"
                                 app:image_height="15dp"
                                 android:text="写评论"
+                                android:clickable="true"
                                 android:paddingTop="3dp"
                                 android:paddingBottom="3dp"
                                 android:paddingLeft="5dp"
@@ -247,14 +252,59 @@
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
-            <Button
-                android:id="@+id/read"
-                android:text="立即阅读"
-                android:enabled="@{bookDetails!=null}"
-                style="@style/titleTextStyle"
-                android:background="@drawable/drawable_button_read"
+            <android.support.design.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.ouyang.freebook.ui.view.ImageTextView
+                    android:id="@+id/addToBookshelf"
+                    android:enabled="@{(bookDetails!=null)}"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableTop="@drawable/ic_add"
+                    android:drawableTint="@color/colorPrimary"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimary"
+                    app:image_height="20dp"
+                    app:image_width="20dp"
+                    android:text='@{bookBean==null?@string/addToBookshelf:@string/removeFromBookshelf}'
+                    android:clickable="true"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+                <Button
+                    android:id="@+id/read"
+                    android:text="立即阅读"
+                    android:enabled="@{bookDetails!=null}"
+                    style="@style/titleTextStyle"
+                    android:background="@drawable/drawable_button_read"
+                    android:layout_weight="1.5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <com.ouyang.freebook.ui.view.ImageTextView
+                    android:id="@+id/download"
+                    android:enabled="@{bookDetails!=null}"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableTop="@drawable/ic_download"
+                    android:drawableTint="@color/colorPrimary"
+                    android:textColor="@color/colorPrimary"
+                    app:image_height="20dp"
+                    app:image_width="20dp"
+                    android:text="全本缓存"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            </android.support.design.widget.CoordinatorLayout>
         </LinearLayout>
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"

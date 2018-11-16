@@ -5,6 +5,8 @@ package com.ouyang.freebook.modle.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
  *   书本详情
  */
 public class BookDetails implements Parcelable {
-
+    @JSONField(name="bookID")
     private String Id;
     private String Name;
     private String Img;

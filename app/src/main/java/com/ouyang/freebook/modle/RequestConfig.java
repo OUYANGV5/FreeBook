@@ -1,8 +1,8 @@
 package com.ouyang.freebook.modle;
 
 public class RequestConfig {
-    public static final String URL_API_BASE="https://shuapi.jiaston.com/";
-    public static final String URL_IMG_BOOK_BASE="https://imgapi.jiaston.com/BookFiles/BookImages/";
+    public static final String URL_API_BASE="https://shuapi.jiaston.com/";//base地址
+    public static final String URL_IMG_BOOK_BASE="https://imgapi.jiaston.com/BookFiles/BookImages/";//图片地址前缀
     public static final String SEX_TYPE_MAN="man";//男生
     public static final String SEX_TYPE_LADY="lady";//女生
 

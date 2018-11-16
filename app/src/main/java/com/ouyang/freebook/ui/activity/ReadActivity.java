@@ -2,6 +2,8 @@ package com.ouyang.freebook.ui.activity;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -416,5 +418,10 @@ public class ReadActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add("下载本书");
         return super.onCreateOptionsMenu(menu);
+    }
+    public static void startReadActivity(Context context,BookDetails bookDetails){
+        Intent intent=new Intent(context,ReadActivity.class);
+        intent.putExtra("book",bookDetails);
+        context.startActivity(intent);
     }
 }

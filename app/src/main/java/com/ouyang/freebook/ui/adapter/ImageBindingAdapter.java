@@ -2,6 +2,7 @@ package com.ouyang.freebook.ui.adapter;
 
 import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,7 +37,7 @@ public class ImageBindingAdapter {
 
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                            this.view.setBackgroundDrawable(resource);
+                        view.setBackgroundDrawable(resource);
                     }
 
                     @Override

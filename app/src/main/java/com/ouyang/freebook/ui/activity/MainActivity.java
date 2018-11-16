@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import com.ouyang.freebook.R;
 import com.ouyang.freebook.databinding.ActivityMainBinding;
-import com.ouyang.freebook.ui.fragment.BookrackFragment;
+import com.ouyang.freebook.ui.fragment.BookshelfFragment;
 import com.ouyang.freebook.ui.fragment.CategoryFragment;
 import com.ouyang.freebook.ui.fragment.RankFragment;
 import com.ouyang.freebook.ui.fragment.StoreFragment;
@@ -37,12 +37,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         fragmentList = new ArrayList<>();
-        fragmentList.add(new BookrackFragment());
+        fragmentList.add(new BookshelfFragment());
         fragmentList.add(new StoreFragment());
         fragmentList.add(new CategoryFragment());
         fragmentList.add(new RankFragment());
         activityMainBinding.bottomNav.enableShiftingMode(false);
         activityMainBinding.bottomNav.enableItemShiftingMode(false);
+        activityMainBinding.bottomNav.enableAnimation(true);
         activityMainBinding.content.setOffscreenPageLimit(3);
         activityMainBinding.content.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

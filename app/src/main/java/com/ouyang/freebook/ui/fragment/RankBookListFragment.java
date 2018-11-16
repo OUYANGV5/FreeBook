@@ -43,6 +43,7 @@ public class RankBookListFragment extends BaseFragment {
     private String typeSort;
     private String typeTime;
     private int index;
+    private boolean hasNext;
 
     @Nullable
     @Override
@@ -64,11 +65,24 @@ public class RankBookListFragment extends BaseFragment {
     }
     private void getData(final boolean isUpdate) {
         int i;
-        if(isUpdate){
+        /*if(isUpdate){
             index=1;
             i=index;
         }else {
             i=++index;
+        }*/
+        if(isUpdate){
+            bookListAdapter.setBottomStatus(BookListAdapter.STATUS_NOTHING);
+            bookListAdapter.notifyDataSetChanged();
+            index=1;
+            i=index;
+        }else {
+            if(!hasNext){
+                bookListAdapter.setBottomStatus(BookListAdapter.STATUS_NOTHING_LOAD);
+                bookListAdapter.notifyDataSetChanged();
+                return;
+            }
+            i=index++;
         }
         rankRequest.getRankList(RequestConfig.SEX_TYPE_MAN,typeSort,typeTime,i)
                 .subscribeOn(Schedulers.io())
@@ -82,6 +96,7 @@ public class RankBookListFragment extends BaseFragment {
 
                     @Override
                     public void onNext(ResponseData<BookList> bookListResponseData) {
+                        hasNext=bookListResponseData.getData().isHasNext();
                         List<Book> bookList = bookListResponseData.getData().getBookList();
                         if(isUpdate){
                             bookListAdapter.getBookList().clear();

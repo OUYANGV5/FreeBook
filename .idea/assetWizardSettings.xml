@@ -101,8 +101,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_write" />
-                            <entry key="sourceFile" value="C:\Users\OUYANG\Desktop\write.svg" />
+                            <entry key="outputName" value="ic_add" />
+                            <entry key="sourceFile" value="C:\Users\OUYANG\Desktop\add.svg" />
                           </map>
                         </option>
                       </PersistentState>

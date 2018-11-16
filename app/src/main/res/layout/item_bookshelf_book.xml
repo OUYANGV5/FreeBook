@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="bookBean"
+            type="com.ouyang.freebook.modle.litepal.BookBean"/>
+    </data>
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.CardView
+            app:cardElevation="2dp"
+            app:cardCornerRadius="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="85dp"
+                android:layout_height="120dp">
+                <ImageView
+                    android:src="@drawable/empty_book_img"
+                    imgName="@{bookBean.img}"
+                    android:scaleType="fitXY"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <com.ouyang.freebook.ui.view.FocusTextView
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:text="@{bookBean.name}"
+                    android:layout_alignParentBottom="true"
+                    android:background="#4d000000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</layout>

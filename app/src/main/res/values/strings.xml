@@ -15,4 +15,7 @@
     <string name="status">状态:\t</string>
 
     <string name="lastUpdate">最近更新</string>
+    
+    <string name="addToBookshelf">加入书架</string>
+    <string name="removeFromBookshelf">移出书架</string>
 </resources>

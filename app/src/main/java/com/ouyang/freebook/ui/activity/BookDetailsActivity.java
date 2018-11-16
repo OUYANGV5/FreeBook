@@ -9,6 +9,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ouyang.freebook.modle.bean.Book;
 import com.ouyang.freebook.R;
@@ -16,10 +17,13 @@ import com.ouyang.freebook.databinding.ActivityBookDetailsBinding;
 import com.ouyang.freebook.modle.bean.BookDetails;
 import com.ouyang.freebook.modle.bean.ResponseData;
 import com.ouyang.freebook.modle.bean.comment.CommentResponseData;
+import com.ouyang.freebook.modle.litepal.BookBean;
 import com.ouyang.freebook.modle.request.BookRequest;
 import com.ouyang.freebook.util.ImmersionUtil;
 import com.ouyang.freebook.util.RequestUtil;
 import com.slideback.helper.SlideBackHelper;
+
+import org.litepal.LitePal;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -73,6 +77,40 @@ public class BookDetailsActivity extends AppCompatActivity {
                 }else {
                     setHeaderAlpha(1f);
                 }
+            }
+        });
+        BookBean bookBean=LitePal.where("bookId=?",String.valueOf(book.getId()))
+                .findFirst(BookBean.class);
+        viewDataBinding.setBookBean(bookBean);
+        viewDataBinding.addToBookshelf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(viewDataBinding.getBookBean()==null){
+                    BookDetails bookDetails=viewDataBinding.getBookDetails();
+                    BookBean book=new BookBean();
+                    book.setBookId(Integer.parseInt(bookDetails.getId()));
+                    book.setScore(bookDetails.getBookVote().getScore());
+                    book.setAuthor(bookDetails.getAuthor());
+                    book.setCName(bookDetails.getCName());
+                    book.setImg(bookDetails.getImg());
+                    book.setName(bookDetails.getName());
+                    book.setDesc(bookDetails.getDesc());
+                    if(book.save()){
+                        viewDataBinding.setBookBean(book);
+                        Toast.makeText(BookDetailsActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(BookDetailsActivity.this, "添加失败了", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    BookBean b=viewDataBinding.getBookBean();
+                    if(b.delete()>0){
+                        viewDataBinding.setBookBean(null);
+                        Toast.makeText(BookDetailsActivity.this, "已移出书架", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(BookDetailsActivity.this, "移出失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             }
         });
         getData();

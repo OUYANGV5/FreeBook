@@ -19,7 +19,7 @@
         例如:
     	<version value="1" />
     -->
-    <version value="5" />
+    <version value="1" />
 
     <!--
     	用映射标签在列表中定义模型，LitePal会
@@ -32,10 +32,11 @@
     	</list>
     -->
     <list>
-    <mapping class="com.ouyang.freebook.modle.bean.BookChapterData"/>
-    <mapping class="com.ouyang.freebook.modle.bean.BookChapterList"/>
-    <mapping class="com.ouyang.freebook.modle.bean.BookChapter"/>
-</list>
+        <mapping class="com.ouyang.freebook.modle.litepal.BookBean"/>
+        <mapping class="com.ouyang.freebook.modle.bean.BookChapterData"/>
+        <mapping class="com.ouyang.freebook.modle.bean.BookChapterList"/>
+        <mapping class="com.ouyang.freebook.modle.bean.BookChapter"/>
+    </list>
 
     <!--
         定义.db文件的位置。“internal”是指.db文件

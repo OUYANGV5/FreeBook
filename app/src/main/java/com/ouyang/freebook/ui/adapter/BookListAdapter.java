@@ -98,7 +98,7 @@ public class BookListAdapter extends RecyclerView.Adapter {
             }else if(bottomStatus==STATUS_NOTHING_LOAD){
                 layoutBottomAddmoreBinding.root.setVisibility(View.VISIBLE);
                 layoutBottomAddmoreBinding.progressBar.setVisibility(View.GONE);
-                layoutBottomAddmoreBinding.text.setText("已全部加载完");
+                layoutBottomAddmoreBinding.text.setText("已经到底了..");
             }
             layoutBottomAddmoreBinding.executePendingBindings();
         }
