@@ -1,16 +1,11 @@
 package com.ouyang.freebook.util;
 
-import com.ouyang.freebook.MyApplicaiotn;
 import com.ouyang.freebook.modle.RequestConfig;
-import com.ouyang.freebook.modle.SSLSocketClient;
 import com.ouyang.freebook.modle.converter.MyConverterFactory;
 import com.ouyang.freebook.modle.interceptor.AddCookieInterceptor;
 import com.ouyang.freebook.modle.interceptor.SetCookieInterceptor;
 
 import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManagerFactory;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

@@ -1,6 +1,7 @@
 package com.ouyang.freebook.ui.fragment;
 
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,6 +24,7 @@ import com.ouyang.freebook.modle.litepal.BookBean;
 import com.ouyang.freebook.modle.request.BookRequest;
 import com.ouyang.freebook.ui.activity.MainActivity;
 import com.ouyang.freebook.ui.activity.ReadActivity;
+import com.ouyang.freebook.ui.activity.SearchBookActivity;
 import com.ouyang.freebook.ui.adapter.BookShelfAdapter;
 import com.ouyang.freebook.util.RequestUtil;
 
@@ -147,6 +152,7 @@ public class BookshelfFragment extends BaseFragment {
     public void onVisibleAgain() {
         MainActivity mainActivity= (MainActivity) getActivity();
         mainActivity.setToolbar(binding.toolbar,true);
+
         List<BookBean> all = LitePal.findAll(BookBean.class);
         bookShelfAdapter.updateList(all);
     }
@@ -155,6 +161,7 @@ public class BookshelfFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         binding=DataBindingUtil.inflate(inflater,R.layout.fragment_bookshelf,container,false);
         return binding.getRoot();
     }
@@ -164,4 +171,20 @@ public class BookshelfFragment extends BaseFragment {
         super.onDestroyView();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main_menu,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.search:
+                Intent intent=new Intent(getActivity(),SearchBookActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -2,18 +2,14 @@ package com.ouyang.freebook.util;
 
 import android.app.Activity;
 import android.content.res.Resources;
-import android.graphics.Paint;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.widget.TextView;
 
-import com.ouyang.freebook.MyApplicaiotn;
+import com.ouyang.freebook.MyApplication;
 import com.ouyang.freebook.R;
-import com.ouyang.freebook.modle.pojo.StringIndex;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +22,9 @@ public class TextViewUtil {
     private static float padding;
     static {
         textPaint=new TextPaint();
-        Resources resources=MyApplicaiotn.getContext().getResources();
+        Resources resources=MyApplication.getContext().getResources();
         textPaint.setTextSize(resources.getDimension(R.dimen.contentTextSize));
-        displayMetrics=MyApplicaiotn.getContext().getResources().getDisplayMetrics();
+        displayMetrics=MyApplication.getContext().getResources().getDisplayMetrics();
         titleHeight=resources.getDimension(R.dimen.sectionTitleHeight);
         padding=resources.getDimension(R.dimen.contentPadding);
         bottomHeight=resources.getDimension(R.dimen.readBottomHeight);

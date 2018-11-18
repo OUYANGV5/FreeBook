@@ -19,7 +19,7 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        overridePendingTransition(0,R.anim.activity_fade_out_animation);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
             getWindow().setNavigationBarColor(Color.TRANSPARENT);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
@@ -33,6 +33,7 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd() {
                 startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
+
                 finish();
 
             }

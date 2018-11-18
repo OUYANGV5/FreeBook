@@ -8,7 +8,7 @@ import com.slideback.helper.manager.ActivityLifeManager;
 
 import org.litepal.LitePal;
 
-public class MyApplicaiotn extends Application {
+public class MyApplication extends Application {
     private static Context context;
     @Override
     public void onCreate() {
